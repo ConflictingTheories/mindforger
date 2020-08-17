@@ -133,9 +133,9 @@ OrlojPresenter::OrlojPresenter(MainWindowPresenter* mainPresenter,
         noteEditPresenter->getView()->getButtonsPanel(), SIGNAL(signalShowLivePreview()),
         mainPresenter, SLOT(doActionToggleLiveNotePreview()));
     // intercept Os table column sorting
-    QObject::connect(
-        view->getOutlinesTable()->horizontalHeader(), SIGNAL(sectionClicked(int)),
-        this, SLOT(slotOutlinesTableSorted(int)));
+//    QObject::connect(
+//        view->getOutlinesTable()->horizontalHeader(), SIGNAL(sectionClicked(int)),
+//        this, SLOT(slotOutlinesTableSorted(int)));
     // toggle full O HTML preview
     QObject::connect(
         view->getOutlineHeaderView()->getEditPanel()->getFullOPreviewButton(), SIGNAL(clicked()),
@@ -829,12 +829,12 @@ void OrlojPresenter::slotRefreshCurrentNotePreview()
 
 void OrlojPresenter::slotOutlinesTableSorted(int column)
 {
-    Qt::SortOrder order
-        = view->getOutlinesTable()->horizontalHeader()->sortIndicatorOrder();
-    MF_DEBUG("Os table sorted: " << column << " descending: " << order << endl);
+//    Qt::SortOrder order
+//        = view->getOutlinesTable()->horizontalHeader()->sortIndicatorOrder();
+//    MF_DEBUG("Os table sorted: " << column << " descending: " << order << endl);
 
     config.setUiOsTableSortColumn(column);
-    config.setUiOsTableSortOrder(order==Qt::SortOrder::AscendingOrder?true:false);
+//    config.setUiOsTableSortOrder(order==Qt::SortOrder::AscendingOrder?true:false);
     mainPresenter->getConfigRepresentation()->save(config);
 }
 

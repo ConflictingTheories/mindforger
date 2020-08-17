@@ -23,15 +23,15 @@ namespace m8r {
 using namespace std;
 
 OutlinesTableView::OutlinesTableView(QWidget *parent, bool isDashboardlet)
-  : QTableView(parent)
+  : QTreeView(parent)
 {
     this->isDashboardlet = isDashboardlet;
 
-    verticalHeader()->setVisible(false);
+//    verticalHeader()->setVisible(false);
 
     // BEFARE ::ResizeToContents this kills performance - use ::Fixed instead:
     // verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+//    verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 
     setSortingEnabled(true);
 
@@ -54,19 +54,19 @@ void OutlinesTableView::keyPressEvent(QKeyEvent* event)
             emit signalShowSelectedOutline();
             return;
         case Qt::Key_Down:
-            QTableView::keyPressEvent(event);
+            QTreeView::keyPressEvent(event);
             return;
         case Qt::Key_Up:
         // IMPROVE left to cancel selection
         case Qt::Key_Left:
-            QTableView::keyPressEvent(event);
+            QTreeView::keyPressEvent(event);
             return;
         }
 
         return;
     }
 
-    QTableView::keyPressEvent(event);
+    QTreeView::keyPressEvent(event);
 }
 
 void OutlinesTableView::mouseDoubleClickEvent(QMouseEvent* event)
@@ -81,11 +81,11 @@ void OutlinesTableView::resizeEvent(QResizeEvent* event)
 {
     MF_DEBUG("OutlinesTableView::resizeEvent " << event << std::endl);
 
-    if(horizontalHeader()->length() > 0) {
+    if(header()->length() > 0) {
         // ensure that 1st column gets the remaining space from others
-        horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+        header()->setSectionResizeMode(0, QHeaderView::Stretch);
     }
-    verticalHeader()->setDefaultSectionSize(fontMetrics().height()*1.5);
+//    verticalHeader()->setDefaultSectionSize(fontMetrics().height()*1.5);
 
     if(isDashboardlet) {
         this->setColumnHidden(1, true);
@@ -120,7 +120,7 @@ void OutlinesTableView::resizeEvent(QResizeEvent* event)
     // pretty
     this->setColumnWidth(7, this->fontMetrics().averageCharWidth()*12);
 
-    QTableView::resizeEvent(event);
+    QTreeView::resizeEvent(event);
 }
 
 } // m8r namespace

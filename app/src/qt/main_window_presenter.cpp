@@ -2334,6 +2334,23 @@ void MainWindowPresenter::doActionNotePromote()
     }
 }
 
+void MainWindowPresenter::doActionNoteCollapse()
+{
+    Note* note = orloj->getOutlineView()->getOutlineTree()->getCurrentNote();
+    if(note) {
+        // IMPROVE consider patch once in class (cross functions)
+        Outline::Patch patch{Outline::Patch::Diff::NO,0,0}; // explicit initialization required by older GCC versions
+        mind->noteCollapse(note, &patch);
+        if(patch.diff != Outline::Patch::Diff::NO) {
+            mind->remind().remember(note->getOutline());
+            orloj->getOutlineView()->getOutlineTree()->refresh(note->getOutline(), &patch);
+            statusBar->showInfo(QString(tr("Collapsed Note '%1'")).arg(note->getName().c_str()));
+        }
+    } else {
+        QMessageBox::critical(&view, tr("Collapse Note"), tr("Please select a Note to be collapsed."));
+    }
+}
+
 void MainWindowPresenter::doActionNoteDemote()
 {
     Note* note = orloj->getOutlineView()->getOutlineTree()->getCurrentNote();

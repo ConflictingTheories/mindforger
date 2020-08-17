@@ -27,6 +27,8 @@ Note::Note(const NoteType* type, Outline* outline)
       outline(outline),
       type(type)
 {
+    collapsed = false;
+    hidden = false;
     depth = 0;
     created = modified = read = deadline = 0;
     reads = revision = 0;
@@ -47,7 +49,8 @@ Note::Note(const Note& n)
             description.push_back(new string(*s));
         }
     }
-
+    collapsed = n.collapsed;
+    hidden = n.hidden;
     depth = n.depth;
     created = n.created;
     modified = n.modified;
@@ -102,6 +105,20 @@ string Note::getMangledName() const
         }
     }
     return result;
+}
+
+boolean Note::isHidden() const
+{
+    return hidden;
+}
+
+void Note::setHidden(boolean state){
+    this->hidden = state;
+}
+
+boolean Note::isCollapsed() const
+{
+    return collapsed;
 }
 
 time_t Note::getCreated() const
@@ -476,6 +493,12 @@ void Note::demote()
 void Note::promote()
 {
     if(depth) depth--;
+}
+
+void Note::collapse()
+{
+    if(hidden) hidden = false;
+    else hidden = true;
 }
 
 void Note::makeDirty()

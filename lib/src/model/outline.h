@@ -280,6 +280,8 @@ public:
      */
     void removeNote(Note* n) { removeNote(n, false); }
 
+    void collapseNote(Note* n, Outline::Patch* patch=nullptr);
+
     void promoteNote(Note* note, Outline::Patch* patch=nullptr);
     void demoteNote(Note* note, Outline::Patch* patch=nullptr);
     void moveNoteToFirst(Note* note, Outline::Patch* patch=nullptr);

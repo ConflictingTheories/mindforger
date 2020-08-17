@@ -21,9 +21,9 @@
 namespace m8r {
 
 OutlineTreeView::OutlineTreeView(QWidget* parent)
-    : QTableView(parent)
+    : QTreeView(parent)
 {
-    verticalHeader()->setVisible(false);
+//    verticalHeader()->setVisible(false);
 
     // BEFARE: this kills performance in case of big(ger) tables
     // verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -36,7 +36,7 @@ OutlineTreeView::OutlineTreeView(QWidget* parent)
     // disable TAB and Ctrl+O up/down navigation (Ctrl+O no longer bound)
     setTabKeyNavigation(false);
 
-    verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+//    verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 }
 
 void OutlineTreeView::keyPressEvent(QKeyEvent* event)
@@ -74,6 +74,9 @@ void OutlineTreeView::keyPressEvent(QKeyEvent* event)
                     break;
                 case Qt::Key_Right:
                     emit signalChangeDemote();
+                    break;
+                case Qt::Key_Tab:
+                    emit signalCollapseRow();
                     break;
 #else
                 case Qt::Key_L:
@@ -133,11 +136,11 @@ void OutlineTreeView::resizeEvent(QResizeEvent* event)
 {
     MF_DEBUG("OutlineTreeView::resizeEvent " << event << std::endl);
 
-    if(horizontalHeader()->length() > 0) {
+    if(header()->length() > 0) {
         // ensure that 1st column gets the remaining space from others
-        horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+        header()->setSectionResizeMode(0, QHeaderView::Stretch);
     }
-    verticalHeader()->setDefaultSectionSize(fontMetrics().height()*1.5);
+//    verticalHeader()->setDefaultSectionSize(fontMetrics().height()*1.5);
 
     int normalizedWidth = width()/fontMetrics().averageCharWidth();
     if(normalizedWidth < SIMPLIFIED_VIEW_THRESHOLD_WIDTH) {
@@ -160,7 +163,7 @@ void OutlineTreeView::resizeEvent(QResizeEvent* event)
     // pretty
     this->setColumnWidth(4, this->fontMetrics().averageCharWidth()*12);
 
-    QTableView::resizeEvent(event);
+    QTreeView::resizeEvent(event);
 }
 
 } // m8r namespace

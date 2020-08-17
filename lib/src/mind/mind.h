@@ -617,7 +617,10 @@ public:
      * @brief Move note one level down from the current depth.
      */
     void noteDemote(Note* note, Outline::Patch* patch=nullptr);
-
+    /**
+     * @brief Collapse and Hide Children
+     */
+    void noteCollapse(Note* note, Outline::Patch* patch=nullptr);
     /**
      * @brief Convert an outline to note in another outline.
      * @return new note key

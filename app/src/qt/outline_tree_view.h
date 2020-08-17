@@ -64,7 +64,7 @@ public:
     }
 };
 
-class OutlineTreeView : public QTableView
+class OutlineTreeView : public QTreeView
 {
     Q_OBJECT
 
@@ -91,6 +91,7 @@ signals:
 
     void signalSelectNextRow();
     void signalSelectPreviousRow();
+    void signalCollapseRow();
 
     void signalChangeUp();
     void signalChangeDown();

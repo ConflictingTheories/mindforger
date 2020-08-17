@@ -27,7 +27,7 @@
 
 namespace m8r {
 
-class OutlinesTableView : public QTableView
+class OutlinesTableView : public QTreeView
 {
     Q_OBJECT
 

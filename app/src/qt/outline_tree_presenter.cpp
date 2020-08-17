@@ -40,6 +40,8 @@ OutlineTreePresenter::OutlineTreePresenter(OutlineTreeView* view, MainWindowPres
 
     QObject::connect(view, SIGNAL(signalOutlineShow()), mwp, SLOT(doActionOutlineShow()));
 
+    QObject::connect(view, SIGNAL(signalCollapseRow()), mwp, SLOT(doActionNoteCollapse()));
+
     QObject::connect(view, SIGNAL(signalChangePromote()), mwp, SLOT(doActionNotePromote()));
     QObject::connect(view, SIGNAL(signalChangeDemote()), mwp, SLOT(doActionNoteDemote()));
     QObject::connect(view, SIGNAL(signalChangeFirst()), mwp, SLOT(doActionNoteFirst()));
@@ -98,13 +100,16 @@ void OutlineTreePresenter::refresh(Outline* outline, Outline::Patch* patch)
                     outline->getNotePathToRoot(i, parents);
                     if(parents.size()) {
                         for(size_t p=0; p<parents.size(); p++) {
-                            view->showRow(parents[p]);
+//                            view->showRow(parents[p]);
+                            view->expand(model->index(parents[p],0));
                         }
                     }
                     // N
-                    view->showRow(i);
+//                    view->showRow(i);
+                    view->expand(model->index(i,0));
                 } else {
-                    view->hideRow(i);
+//                    view->hideRow(i);
+                    view->setRowHidden(i, model->index(i,0),true);
                 }
             }
         }
@@ -125,7 +130,7 @@ void OutlineTreePresenter::insertAndSelect(Note* note)
 {
     int row = model->insertNote(note);
     view->scrollTo(model->index(row, 0));
-    view->selectRow(row);
+//    view->selectRow(row);
 }
 
 void OutlineTreePresenter::clearSelection()
@@ -138,7 +143,7 @@ void OutlineTreePresenter::selectRowByNote(const Note* note)
     if(note) {
         int row = model->getRowByNote(note);
         if(row >= 0) {
-            view->selectRow(row);
+//            view->selectRow(row);
             view->scrollTo(model->index(row, 0));
             return;
         }

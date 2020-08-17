@@ -1070,6 +1070,14 @@ void Mind::notePromote(Note* note, Outline::Patch* patch)
     }
 }
 
+void Mind::noteCollapse(Note* note, Outline::Patch* patch)
+{
+    if(note) {
+        note->getOutline()->collapseNote(note, patch);
+    }
+}
+
+
 void Mind::noteDemote(Note* note, Outline::Patch* patch)
 {
     if(note) {

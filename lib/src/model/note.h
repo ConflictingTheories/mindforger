@@ -57,6 +57,9 @@ private:
     // various format, structure, semantic, ... flags (bit)
     int flags;
 
+    boolean hidden;
+    boolean collapsed;
+
     // [0,inf)
     u_int16_t depth;
 
@@ -109,6 +112,8 @@ public:
     time_t getDeadline() const;
     void setDeadline(time_t deadline);
     u_int16_t getDepth() const;
+    void setHidden(boolean hidden);
+    boolean isHidden() const;
     void setDepth(u_int16_t depth);
     time_t getModified() const;
     void makeModified();
@@ -163,6 +168,9 @@ public:
 
     void promote();
     void demote();
+
+    void collapse();
+    boolean isCollapsed() const;
 
     void setPostDeclaredSection() { flags |= FLAG_MASK_POST_DECLARED_SECTION; }
     bool isPostDeclaredSection() const { return flags & FLAG_MASK_POST_DECLARED_SECTION; }

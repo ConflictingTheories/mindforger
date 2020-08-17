@@ -297,6 +297,7 @@ public slots:
     void doActionNoteEdit();
     void doActionNoteFirst();
     void doActionNoteUp();
+    void doActionNoteCollapse();
     void doActionNotePromote();
     void doActionNoteDemote();
     void doActionNoteDown();

@@ -605,7 +605,8 @@ void Outline::getDirectNoteChildren(const Note* note, std::vector<Note*>& direct
 // IMPROVE: if gap between Ns level is >1, this method doesn't work (user has freedom to make arbitrary depth)
 void Outline::getAllNoteChildren(const Note* note, vector<Note*>* children, Outline::Patch* patch)
 {
-    if(note) {
+    boolean show = !note->isHidden();
+    if(note && show) {
         if(note == notes[notes.size()-1]) {
             if(patch) {
                 patch->start=notes.size()-1;
@@ -748,6 +749,31 @@ void Outline::promoteNote(Note* note, Outline::Patch* patch)
             note->makeModified();
             for(Note* n:children) {
                 n->promote();
+                // IMPROVE consider whether children should be marked as modified or no n->makeModified();
+            }
+            makeModified();
+            if(patch) {
+                patch->diff = Outline::Patch::Diff::CHANGE;
+            }
+            return;
+        }
+    }
+    if(patch) {
+        patch->diff = Outline::Patch::Diff::NO;
+    }
+}
+
+
+void Outline::collapseNote(Note* note, Outline::Patch* patch)
+{
+    if(note) {
+        if(note->getDepth()) {
+            vector<Note*> children{};
+            getAllNoteChildren(note, &children, patch);
+            note->collapse();
+            note->makeModified();
+            for(Note* n:children) {
+                n->setHidden(!n->isHidden());
                 // IMPROVE consider whether children should be marked as modified or no n->makeModified();
             }
             makeModified();
