@@ -2337,10 +2337,15 @@ void MainWindowPresenter::doActionNotePromote()
 void MainWindowPresenter::doActionNoteCollapse()
 {
     Note* note = orloj->getOutlineView()->getOutlineTree()->getCurrentNote();
+    QModelIndex index = orloj->getOutlineView()->getOutlineTree()->getCurrentIndex();
+    OutlineTreeView* tree = orloj->getOutlineView()->getOutlineTree()->getView();
+    statusBar->showInfo(QString(tr("Collapsed Note '%1'")).arg(note->getName().c_str()));
+
     if(note) {
         // IMPROVE consider patch once in class (cross functions)
         Outline::Patch patch{Outline::Patch::Diff::NO,0,0}; // explicit initialization required by older GCC versions
         mind->noteCollapse(note, &patch);
+        tree->setExpanded(index,!note->isCollapsed());
         if(patch.diff != Outline::Patch::Diff::NO) {
             mind->remind().remember(note->getOutline());
             orloj->getOutlineView()->getOutlineTree()->refresh(note->getOutline(), &patch);

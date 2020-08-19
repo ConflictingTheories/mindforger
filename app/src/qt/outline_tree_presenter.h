@@ -65,6 +65,7 @@ public:
     void focus() { view->setFocus(); }
     void selectRowByNote(const Note* note);
 
+    QModelIndex getCurrentIndex() const;
     int getCurrentRow() const;
     Note* getCurrentNote() const;
 

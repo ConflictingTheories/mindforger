@@ -75,7 +75,7 @@ void OutlineTreeView::keyPressEvent(QKeyEvent* event)
                 case Qt::Key_Right:
                     emit signalChangeDemote();
                     break;
-                case Qt::Key_Tab:
+                case Qt::Key_Space:
                     emit signalCollapseRow();
                     break;
 #else

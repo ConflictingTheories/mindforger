@@ -151,6 +151,14 @@ void OutlineTreePresenter::selectRowByNote(const Note* note)
     view->clearSelection();
 }
 
+QModelIndex OutlineTreePresenter::getCurrentIndex() const
+{
+    QModelIndexList indexes = view->selectionModel()->selection().indexes();
+    for(int i=0; i<indexes.count(); i++) {
+        return indexes.at(i);
+    }
+}
+
 int OutlineTreePresenter::getCurrentRow() const
 {
     QModelIndexList indexes = view->selectionModel()->selection().indexes();
